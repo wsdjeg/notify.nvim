@@ -7,6 +7,7 @@
 * [Installation](#installation)
 * [Setup](#setup)
 * [Usage](#usage)
+* [`vim.notify`](#vimnotify)
 * [Self-Promotion](#self-promotion)
 * [License](#license)
 
@@ -44,6 +45,16 @@ local nt = require('notify')
 
 nt.notify('normal message')
 nt.notify('warn message', 'WarningMsg')
+```
+
+## `vim.notify`
+
+Use `vim.notify` with this plugin:
+
+```lua
+vim.notify = function(msg, level, opt)
+    require('notify').notify(msg)
+end
 ```
 
 ## Self-Promotion

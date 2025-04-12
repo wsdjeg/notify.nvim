@@ -305,6 +305,7 @@ function NT.setup(opt)
     easing_func = opt.easing_func
   end
   M.timeout = opt.timeout or M.timeout
+  M.borderchars = opt.borderchars or M.borderchars
 end
 
 return NT

@@ -1,7 +1,6 @@
 # notify.nvim
 
-`notify.nvim` is an notification framework plugin for neovim, which is detached from [spacevim notify API](https://spacevim.org/api/notify/).
-
+`notify.nvim` is an notification framework plugin for neovim.
 
 <!-- vim-markdown-toc GFM -->
 
@@ -34,6 +33,7 @@ require('plug').add({
 require('notify').setup({
   easing_func = 'linear',
   timeout = 3000,
+  borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
 })
 ```
 
@@ -43,9 +43,8 @@ require('notify').setup({
 local nt = require('notify')
 
 nt.notify('normal message')
-nt.notify('warn message', 'WarningMsg)
+nt.notify('warn message', 'WarningMsg')
 ```
-
 
 ## Self-Promotion
 

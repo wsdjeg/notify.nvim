@@ -36,10 +36,12 @@ M.hashkey = ''
 M.config = {}
 M.notification_color = 'Normal'
 
+local NT = {}
+
 ---@param msg string|table<string> notification messages
 ---@param opts table notify options
 ---  - title: string, the notify title
-function M.notify(msg, ...) -- {{{
+function NT.notify(msg, ...) -- {{{
   local opts = select(1, ...) or {}
   if M.is_list_of_string(msg) then
     extend(M.message, msg)
@@ -296,12 +298,13 @@ function M.close(...) -- {{{
 end
 -- }}}
 
-function M.setup(opt)
+function NT.setup(opt)
   opt = opt or {}
 
   if opt.easing_func and type(opt.easing_func) == 'string' and easing[opt.easing_func] then
     easing_func = opt.easing_func
   end
+  M.timeout = opt.timeout or M.timeout
 end
 
-return M
+return NT

@@ -33,49 +33,7 @@ require('plug').add({
 ```lua
 require('notify').setup({
   easing_func = 'linear',
-  --available functions:
-  --
-  --    linear
-  --    inQuad
-  --    outQuad
-  --    inOutQuad
-  --    outInQuad
-  --    inCubic
-  --    outCubic
-  --    inOutCubic
-  --    outInCubic
-  --    inQuart
-  --    outQuart
-  --    inOutQuart
-  --    outInQuart
-  --    inQuint
-  --    outQuint
-  --    inOutQuint
-  --    outInQuint
-  --    inSine
-  --    outSine
-  --    inOutSine
-  --    outInSine
-  --    inExpo
-  --    outExpo
-  --    inOutExpo
-  --    outInExpo
-  --    inCirc
-  --    outCirc
-  --    inOutCirc
-  --    outInCirc
-  --    inElastic
-  --    outElastic
-  --    inOutElastic
-  --    outInElastic
-  --    inBack
-  --    outBack
-  --    inOutBack
-  --    outInBack
-  --    inBounce
-  --    outBounce
-  --    inOutBounce
-  --    outInBounce
+  timeout = 3000,
 })
 ```
 

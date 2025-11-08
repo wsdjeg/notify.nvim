@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.1.0](https://github.com/wsdjeg/notify.nvim/compare/v2.0.0...v2.1.0) (2025-11-08)
+
+
+### Features
+
+* add notify picker source ([ee60fae](https://github.com/wsdjeg/notify.nvim/commit/ee60faea969a00cb1bf5915c6ad3f7c8834bce73))
+
+
+### Bug Fixes
+
+* fix message line sep ([d75565b](https://github.com/wsdjeg/notify.nvim/commit/d75565b17c51e5ea4038d17e0c9bef4ce8e5c960))
+
 ## [2.0.0](https://github.com/wsdjeg/notify.nvim/compare/v1.0.0...v2.0.0) (2025-11-08)
 
 

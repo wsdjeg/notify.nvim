@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/wsdjeg/notify.nvim/compare/v1.0.0...v2.0.0) (2025-11-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* use native winapi border
+
+### Features
+
+* use native winapi border ([a9b6133](https://github.com/wsdjeg/notify.nvim/commit/a9b61338af4ca679bc86b0ec7107f32346baedfb))
+
 ## 1.0.0 (2025-04-12)
 
 

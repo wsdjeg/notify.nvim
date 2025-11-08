@@ -8,6 +8,7 @@
 - [Setup](#setup)
 - [Usage](#usage)
 - [`vim.notify`](#vimnotify)
+- [Picker source](#picker-source)
 - [Self-Promotion](#self-promotion)
 - [License](#license)
 
@@ -42,7 +43,16 @@ require('notify').setup({
 ```lua
 local nt = require('notify')
 
+--- notify single message
 nt.notify('normal message')
+
+--- notify multiple lines message
+nt.notify('line1\nline2\nline3')
+
+-- which is same as
+nt.notify({ 'line1', 'line2', 'line3' })
+
+-- specific notify message highlight
 nt.notify('warn message', 'WarningMsg')
 ```
 
@@ -54,6 +64,14 @@ Use `vim.notify` with this plugin:
 vim.notify = function(msg, level, opt)
     require('notify').notify(msg)
 end
+```
+
+## Picker source
+
+This plugin also provides a notify source for picker.nvim.
+
+```
+:Picker notify
 ```
 
 ## Self-Promotion

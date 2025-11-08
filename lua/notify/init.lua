@@ -41,6 +41,7 @@ local NT = {}
 ---@param opts table|string notify options
 ---  - title: string, the notify title
 function NT.notify(msg, opts) -- {{{
+  opts = opts or {}
   table.insert(notify_history, { msg, opts })
   if M.is_list_of_string(msg) then
     extend(M.message, msg)

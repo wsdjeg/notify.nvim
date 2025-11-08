@@ -4,12 +4,12 @@
 
 <!-- vim-markdown-toc GFM -->
 
-* [Installation](#installation)
-* [Setup](#setup)
-* [Usage](#usage)
-* [`vim.notify`](#vimnotify)
-* [Self-Promotion](#self-promotion)
-* [License](#license)
+- [Installation](#installation)
+- [Setup](#setup)
+- [Usage](#usage)
+- [`vim.notify`](#vimnotify)
+- [Self-Promotion](#self-promotion)
+- [License](#license)
 
 <!-- vim-markdown-toc -->
 
@@ -34,7 +34,6 @@ require('plug').add({
 require('notify').setup({
   easing_func = 'linear',
   timeout = 3000,
-  borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
 })
 ```
 

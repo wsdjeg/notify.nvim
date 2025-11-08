@@ -19,6 +19,9 @@ local step = 0
 local easing_func = 'linear'
 
 local notifications = {}
+
+local notify_history = {}
+
 M.message = {}
 M.notification_width = 1
 M.notify_max_width = 0
@@ -35,10 +38,10 @@ M.winhighlight = 'NormalFloat:Normal,FloatBorder:WinSeparator,Search:None,CurSea
 local NT = {}
 
 ---@param msg string|table<string> notification messages
----@param opts table notify options
+---@param opts table|string notify options
 ---  - title: string, the notify title
-function NT.notify(msg, ...) -- {{{
-  local opts = select(1, ...) or {}
+function NT.notify(msg, opts) -- {{{
+  table.insert(notify_history, { msg, opts })
   if M.is_list_of_string(msg) then
     extend(M.message, msg)
   elseif type(msg) == 'string' then
@@ -173,7 +176,7 @@ function M.redraw_windows()
       focusable = false,
       noautocmd = true,
     })
-    vim.api.nvim_win_set_option(M.winid, 'winhighlight', M.winhighlight)
+    vim.api.nvim_set_option_value('winhighlight', M.winhighlight, { win = M.winid })
     vim.fn.matchadd(M.notification_color, '.*', 10, -1, {
       window = M.winid,
     })
@@ -182,7 +185,7 @@ function M.redraw_windows()
       and vim.fn.exists('&winblend') == 1
       and vim.fn.exists('*nvim_win_set_option') == 1
     then
-      vim.api.nvim_win_set_option(M.winid, 'winblend', M.winblend)
+      vim.api.nvim_set_option_value('winblend', M.winblend, { win = M.winid })
     end
   end
   vim.api.nvim_buf_set_lines(M.bufnr, 0, -1, false, message_body(M.message))
@@ -243,6 +246,10 @@ function NT.setup(opt)
     easing_func = opt.easing_func
   end
   M.timeout = opt.timeout or M.timeout
+end
+
+function NT.get_history()
+  return notify_history
 end
 
 return NT

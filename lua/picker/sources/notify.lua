@@ -22,8 +22,8 @@ function M.get()
       item.str = msg[1]
       item.context = msg
     else
-      item.str = msg
-      item.context = { msg }
+      item.context = vim.split(msg, '\n')
+      item.str = item.context[1]
     end
     table.insert(items, {
       value = item,

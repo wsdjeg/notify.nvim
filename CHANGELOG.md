@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.1.0](https://github.com/wsdjeg/notify.nvim/compare/v2.0.0...v2.1.0) (2025-11-23)
+
+
+### Features
+
+* add luarocks support ([633f508](https://github.com/wsdjeg/notify.nvim/commit/633f5085f22d63a48b1ea3d55c62b7cc11dd0104))
+* add notify picker source ([ee60fae](https://github.com/wsdjeg/notify.nvim/commit/ee60faea969a00cb1bf5915c6ad3f7c8834bce73))
+
+
+### Bug Fixes
+
+* fix message line sep ([d75565b](https://github.com/wsdjeg/notify.nvim/commit/d75565b17c51e5ea4038d17e0c9bef4ce8e5c960))
+
 ## [2.0.0](https://github.com/wsdjeg/notify.nvim/compare/v1.0.0...v2.0.0) (2025-11-08)
 
 

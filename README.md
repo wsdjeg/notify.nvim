@@ -29,6 +29,12 @@ require('plug').add({
 })
 ```
 
+Using [luarocks](https://luarocks.org/)
+
+```
+luarocks install notify.nvim
+```
+
 ## Setup
 
 ```lua

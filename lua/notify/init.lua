@@ -38,7 +38,7 @@ M.winhighlight = 'NormalFloat:Normal,FloatBorder:WinSeparator,Search:None,CurSea
 local NT = {}
 
 ---@param msg string|table<string> notification messages
----@param opts table|string notify options
+---@param opts? table|string notify options
 ---  - title: string, the notify title
 function NT.notify(msg, opts) -- {{{
   opts = opts or {}

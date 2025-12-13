@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/wsdjeg/notify.nvim/compare/v2.1.0...v2.1.1) (2025-12-13)
+
+
+### Bug Fixes
+
+* fix notify argument ([70a19ca](https://github.com/wsdjeg/notify.nvim/commit/70a19ca9af9e718947d4f8f4158a3b9948ba4dfc))
+
 ## [2.1.0](https://github.com/wsdjeg/notify.nvim/compare/v2.0.0...v2.1.0) (2025-11-23)
 
 

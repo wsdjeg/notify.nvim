@@ -78,7 +78,7 @@ function NT.notify(msg, opts) -- {{{
   end
   opts = opts or {}
   table.insert(notify_history, { msg, opts })
-  if M.is_list_of_string(msg) then
+  if type(msg) == 'table' and M.is_list_of_string(msg) then
     for _, v in ipairs(msg) do
       table.insert(M.msgs, { v, opts })
     end
@@ -241,7 +241,7 @@ function M.increase_window()
   end
 end
 
-function M.close(...) -- {{{
+function M.close() -- {{{
   if not empty(M.msgs) then
     table.remove(M.msgs, 1)
   end

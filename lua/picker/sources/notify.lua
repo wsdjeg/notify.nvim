@@ -40,11 +40,12 @@ function M.get()
   return items
 end
 
-function M.default_action(item) end
+function M.default_action(item)
+    vim.fn.setreg('"', table.concat(item.value.context, '\n'))
+end
 
 M.preview_win = true
 
----@field item PickerItem
 function M.preview(item, win, buf)
   previewer.buflines = item.value.context
   previewer.filetype = nil

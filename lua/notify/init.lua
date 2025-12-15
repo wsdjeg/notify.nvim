@@ -3,7 +3,11 @@ local M = {}
 local util = require('notify.util')
 
 local empty = function(expr)
-  return vim.fn.empty(expr) == 1
+  if type(expr) == 'string' or vim.islist(expr) then
+    return #expr == 0
+  else
+    return false
+  end
 end
 
 local extend = function(t1, t2) -- {{{
@@ -65,10 +69,10 @@ function NT.notify(msg, opts) -- {{{
     easing_func = opts.easing.func or 'linear'
   end
   M.redraw_windows()
-  vim.fn.setbufvar(M.bufnr, '&number', 0)
-  vim.fn.setbufvar(M.bufnr, '&relativenumber', 0)
-  vim.fn.setbufvar(M.bufnr, '&cursorline', 0)
-  vim.fn.setbufvar(M.bufnr, '&bufhidden', 'wipe')
+  vim.api.nvim_set_option_value('number', false, { win = M.winid })
+  vim.api.nvim_set_option_value('relativenumber', false, { win = M.winid })
+  vim.api.nvim_set_option_value('cursorline', false, { win = M.winid })
+  vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = M.bufnr })
   notifications[M.hashkey] = M
   M.increase_window()
   if type(msg) == 'table' then
@@ -139,13 +143,6 @@ function M.redraw_windows()
     return
   end
   M.begin_row = 2
-  -- detached plugin no need to read shared notifys
-  local ok, viml_notify = pcall(vim.fn['SpaceVim#api#notify#shared_notifys'])
-  if ok then
-    for hashkey, _ in pairs(viml_notify) do
-      M.begin_row = M.begin_row + msg_real_len(viml_notify[hashkey].message) + 2
-    end
-  end
   for hashkey, _ in pairs(notifications) do
     if hashkey ~= M.hashkey then
       M.begin_row = M.begin_row + msg_real_len(notifications[hashkey].message) + 2
@@ -164,7 +161,7 @@ function M.redraw_windows()
       col = vim.o.columns - M.notification_width - 1,
     })
   else
-    if vim.fn.bufexists(M.bufnr) ~= 1 then
+    if not vim.api.nvim_buf_is_valid(M.bufnr) then
       M.bufnr = vim.api.nvim_create_buf(false, true)
     end
     M.winid = vim.api.nvim_open_win(M.bufnr, false, {
@@ -212,7 +209,7 @@ function M.increase_window()
       )
     end
     M.redraw_windows()
-    vim.fn.timer_start(math.floor(1000 / fps + 0.5), M.increase_window, { ['repeat'] = 1 })
+    vim.defer_fn(M.increase_window, math.floor(1000 / fps + 0.5))
   end
 end
 

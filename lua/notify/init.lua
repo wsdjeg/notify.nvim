@@ -26,7 +26,35 @@ local notifications = {}
 
 local notify_history = {}
 
-M.message = {}
+-- the global ns
+local notify_ns = vim.api.nvim_create_namespace('notify.nvim')
+local notfiy_highlight_ids = {}
+
+local function clear_highlight()
+  for _, id in ipairs(notfiy_highlight_ids) do
+    vim.api.nvim_buf_del_extmark(M.bufnr, notify_ns, id)
+  end
+  notfiy_highlight_ids = {}
+end
+
+M.msgs = {}
+
+local function highlight()
+  local i = 0
+  for _, msg in ipairs(M.msgs) do
+    local messages = vim.split(msg[1], '\n')
+    table.insert(
+      notfiy_highlight_ids,
+      vim.api.nvim_buf_set_extmark(M.bufnr, notify_ns, i, 0, {
+        end_col = #messages[#messages],
+        end_line = i + #messages - 1,
+        hl_group = msg[2].color,
+      })
+    )
+    i = i + #messages
+  end
+end
+
 M.notification_width = 1
 M.notify_max_width = 0
 M.winid = -1
@@ -45,21 +73,22 @@ local NT = {}
 ---@param opts? table|string notify options
 ---  - title: string, the notify title
 function NT.notify(msg, opts) -- {{{
+  if type(opts) == 'string' then
+    opts = { color = opts }
+  end
   opts = opts or {}
   table.insert(notify_history, { msg, opts })
   if M.is_list_of_string(msg) then
-    extend(M.message, msg)
+    for _, v in ipairs(msg) do
+      table.insert(M.msgs, { v, opts })
+    end
   elseif type(msg) == 'string' then
-    table.insert(M.message, msg)
+    table.insert(M.msgs, { msg, opts })
   end
   if M.notify_max_width == 0 then
     M.notify_max_width = vim.o.columns * 0.30
   end
-  if type(opts) == 'string' then
-    M.notification_color = opts
-  elseif type(opts) == 'table' then
-    M.notification_color = opts.color or 'Normal'
-  end
+  M.notification_color = opts.color or 'Normal'
   if empty(M.hashkey) then
     M.hashkey = util.generate_simple(10)
   end
@@ -86,13 +115,13 @@ end
 local function msg_real_len(msg)
   local l = 0
   for _, m in pairs(msg) do
-    l = l + #vim.split(m, '\n')
+    l = l + #vim.split(m[1], '\n')
   end
   return l
 end
 
 function M.close_all() -- {{{
-  M.message = {}
+  M.msgs = {}
 
   if M.win_is_open then
     vim.api.nvim_win_close(M.winid, true)
@@ -132,20 +161,20 @@ end
 local function message_body(m) -- {{{
   local b = {}
   for _, v in pairs(m) do
-    extend(b, vim.split(v, '\n'))
+    extend(b, vim.split(v[1], '\n'))
   end
   return b
 end
 -- }}}
 
 function M.redraw_windows()
-  if empty(M.message) then
+  if empty(M.msgs) then
     return
   end
   M.begin_row = 2
   for hashkey, _ in pairs(notifications) do
     if hashkey ~= M.hashkey then
-      M.begin_row = M.begin_row + msg_real_len(notifications[hashkey].message) + 2
+      M.begin_row = M.begin_row + msg_real_len(notifications[hashkey].msgs) + 2
     else
       break
     end
@@ -154,7 +183,7 @@ function M.redraw_windows()
     vim.api.nvim_win_set_config(M.winid, {
       relative = 'editor',
       width = M.notification_width,
-      height = msg_real_len(M.message),
+      height = msg_real_len(M.msgs),
       row = M.begin_row + 1,
       focusable = false,
       border = 'rounded',
@@ -167,7 +196,7 @@ function M.redraw_windows()
     M.winid = vim.api.nvim_open_win(M.bufnr, false, {
       relative = 'editor',
       width = M.notification_width,
-      height = msg_real_len(M.message),
+      height = msg_real_len(M.msgs),
       row = M.begin_row + 1,
       col = vim.o.columns - M.notification_width - 1,
       border = 'rounded',
@@ -175,9 +204,6 @@ function M.redraw_windows()
       noautocmd = true,
     })
     vim.api.nvim_set_option_value('winhighlight', M.winhighlight, { win = M.winid })
-    vim.fn.matchadd(M.notification_color, '.*', 10, -1, {
-      window = M.winid,
-    })
     if
       M.winblend > 0
       and vim.fn.exists('&winblend') == 1
@@ -186,7 +212,9 @@ function M.redraw_windows()
       vim.api.nvim_set_option_value('winblend', M.winblend, { win = M.winid })
     end
   end
-  vim.api.nvim_buf_set_lines(M.bufnr, 0, -1, false, message_body(M.message))
+  clear_highlight()
+  vim.api.nvim_buf_set_lines(M.bufnr, 0, -1, false, message_body(M.msgs))
+  highlight()
   vim.api.nvim_win_set_cursor(M.winid, { 1, 0 })
 end
 
@@ -214,10 +242,10 @@ function M.increase_window()
 end
 
 function M.close(...) -- {{{
-  if not empty(M.message) then
-    table.remove(M.message, 1)
+  if not empty(M.msgs) then
+    table.remove(M.msgs, 1)
   end
-  if #M.message == 0 then
+  if #M.msgs == 0 then
     if M.win_is_open() then
       local ei = vim.o.eventignore
       vim.o.eventignore = 'all'

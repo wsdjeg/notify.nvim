@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/wsdjeg/notify.nvim/compare/v2.2.0...v2.2.1) (2025-12-16)
+
+
+### Bug Fixes
+
+* wrap notify with schedule to avoid E5560 ([dd9ef49](https://github.com/wsdjeg/notify.nvim/commit/dd9ef4946446e86956cae6d0c095797437761c30))
+
 ## [2.2.0](https://github.com/wsdjeg/notify.nvim/compare/v2.1.0...v2.2.0) (2025-12-15)
 
 

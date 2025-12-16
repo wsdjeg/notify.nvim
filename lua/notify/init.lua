@@ -73,42 +73,44 @@ local NT = {}
 ---@param opts? table|string notify options
 ---  - title: string, the notify title
 function NT.notify(msg, opts) -- {{{
-  if type(opts) == 'string' then
-    opts = { color = opts }
-  end
-  opts = opts or {}
-  table.insert(notify_history, { msg, opts })
-  if type(msg) == 'table' and M.is_list_of_string(msg) then
-    for _, v in ipairs(msg) do
-      table.insert(M.msgs, { v, opts })
+  vim.schedule(function()
+    if type(opts) == 'string' then
+      opts = { color = opts }
     end
-  elseif type(msg) == 'string' then
-    table.insert(M.msgs, { msg, opts })
-  end
-  if M.notify_max_width == 0 then
-    M.notify_max_width = vim.o.columns * 0.30
-  end
-  M.notification_color = opts.color or 'Normal'
-  if empty(M.hashkey) then
-    M.hashkey = util.generate_simple(10)
-  end
-  if opts.easing then
-    fps = opts.easing.fps or 60
-    total_time = opts.easing.time or 300
-    easing_func = opts.easing.func or 'linear'
-  end
-  M.redraw_windows()
-  vim.api.nvim_set_option_value('number', false, { win = M.winid })
-  vim.api.nvim_set_option_value('relativenumber', false, { win = M.winid })
-  vim.api.nvim_set_option_value('cursorline', false, { win = M.winid })
-  vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = M.bufnr })
-  notifications[M.hashkey] = M
-  M.increase_window()
-  if type(msg) == 'table' then
-    vim.fn.timer_start(M.timeout, M.close, { ['repeat'] = #msg })
-  else
-    vim.fn.timer_start(M.timeout, M.close, { ['repeat'] = 1 })
-  end
+    opts = opts or {}
+    table.insert(notify_history, { msg, opts })
+    if type(msg) == 'table' and M.is_list_of_string(msg) then
+      for _, v in ipairs(msg) do
+        table.insert(M.msgs, { v, opts })
+      end
+    elseif type(msg) == 'string' then
+      table.insert(M.msgs, { msg, opts })
+    end
+    if M.notify_max_width == 0 then
+      M.notify_max_width = vim.o.columns * 0.30
+    end
+    M.notification_color = opts.color or 'Normal'
+    if empty(M.hashkey) then
+      M.hashkey = util.generate_simple(10)
+    end
+    if opts.easing then
+      fps = opts.easing.fps or 60
+      total_time = opts.easing.time or 300
+      easing_func = opts.easing.func or 'linear'
+    end
+    M.redraw_windows()
+    vim.api.nvim_set_option_value('number', false, { win = M.winid })
+    vim.api.nvim_set_option_value('relativenumber', false, { win = M.winid })
+    vim.api.nvim_set_option_value('cursorline', false, { win = M.winid })
+    vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = M.bufnr })
+    notifications[M.hashkey] = M
+    M.increase_window()
+    if type(msg) == 'table' then
+      vim.fn.timer_start(M.timeout, M.close, { ['repeat'] = #msg })
+    else
+      vim.fn.timer_start(M.timeout, M.close, { ['repeat'] = 1 })
+    end
+  end)
 end
 ---@param msg table<string> # a string message list
 ---@return number

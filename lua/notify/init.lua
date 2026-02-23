@@ -100,6 +100,7 @@ function NT.notify(msg, opts) -- {{{
     end
     M.redraw_windows()
     vim.api.nvim_set_option_value('number', false, { win = M.winid })
+    vim.api.nvim_set_option_value('list', false, { win = M.winid })
     vim.api.nvim_set_option_value('relativenumber', false, { win = M.winid })
     vim.api.nvim_set_option_value('cursorline', false, { win = M.winid })
     vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = M.bufnr })

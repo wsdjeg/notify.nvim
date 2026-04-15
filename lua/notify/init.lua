@@ -2,6 +2,8 @@ local M = {}
 
 local util = require('notify.util')
 
+local border = 'rounded'
+
 local empty = function(expr)
   if type(expr) == 'string' or vim.islist(expr) then
     return #expr == 0
@@ -189,7 +191,7 @@ function M.redraw_windows()
       height = msg_real_len(M.msgs),
       row = M.begin_row + 1,
       focusable = false,
-      border = 'rounded',
+      border = border,
       col = vim.o.columns - M.notification_width - 1,
     })
   else
@@ -202,7 +204,7 @@ function M.redraw_windows()
       height = msg_real_len(M.msgs),
       row = M.begin_row + 1,
       col = vim.o.columns - M.notification_width - 1,
-      border = 'rounded',
+      border = border,
       focusable = false,
       noautocmd = true,
     })
@@ -275,6 +277,8 @@ function NT.setup(opt)
     easing_func = opt.easing_func
   end
   M.timeout = opt.timeout or M.timeout
+
+  border = opt.border or border
 end
 
 function NT.get_history()

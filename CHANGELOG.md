@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.3.0](https://github.com/wsdjeg/notify.nvim/compare/v2.2.0...v2.3.0) (2026-04-15)
+
+
+### Features
+
+* make notification border configurable ([356a53a](https://github.com/wsdjeg/notify.nvim/commit/356a53a66b044395557b16d19ffc722bd0debe8f))
+
+
+### Bug Fixes
+
+* disable list option in notify window ([f82571a](https://github.com/wsdjeg/notify.nvim/commit/f82571abf66bbf8ceca69a4103e9753e79a91f96))
+* wrap notify with schedule to avoid E5560 ([dd9ef49](https://github.com/wsdjeg/notify.nvim/commit/dd9ef4946446e86956cae6d0c095797437761c30))
+
 ## [2.2.0](https://github.com/wsdjeg/notify.nvim/compare/v2.1.0...v2.2.0) (2025-12-15)
 
 

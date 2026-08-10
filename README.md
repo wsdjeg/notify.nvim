@@ -2,6 +2,13 @@
 
 `notify.nvim` is an notification framework plugin for neovim.
 
+[![Run Tests](https://github.com/wsdjeg/notify.nvim/actions/workflows/test.yml/badge.svg)](https://github.com/wsdjeg/notify.nvim/actions/workflows/test.yml)
+[![GitHub License](https://img.shields.io/github/license/wsdjeg/notify.nvim)](LICENSE)
+[![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/wsdjeg/notify.nvim)](https://github.com/wsdjeg/notify.nvim/issues)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/wsdjeg/notify.nvim)](https://github.com/wsdjeg/notify.nvim/commits/master/)
+[![GitHub Release](https://img.shields.io/github/v/release/wsdjeg/notify.nvim)](https://github.com/wsdjeg/notify.nvim/releases)
+[![luarocks](https://img.shields.io/luarocks/v/wsdjeg/notify.nvim)](https://luarocks.org/modules/wsdjeg/notify.nvim)
+
 <!-- vim-markdown-toc GFM -->
 
 - [Installation](#installation)
@@ -91,3 +98,4 @@ Love this plugin? Follow [me](https://wsdjeg.net/) on
 ## License
 
 This project is licensed under the GPL-3.0 License.
+
